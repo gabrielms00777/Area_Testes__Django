@@ -28,7 +28,7 @@
     <div class="container mt-5">
         <h2>Clientes Cadastrados</h2>
         <hr>
-        <button type="button" class="btn btn-primary rigth" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastro">
             Cadastrar Cliente
         </button>
         <br>
@@ -39,6 +39,8 @@
                   <th scope="col">Empresa</th>
                   <th scope="col">CNPJ</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Editar</th>
+                  <th scope="col">Deletar</th>
                 </tr>
               </thead>
               <tbody>
@@ -48,6 +50,8 @@
                     <td>{{cliente.nome}}</td>
                     <td>{{cliente.cnpj}}</td>
                     <td>{{cliente.status}}</td>
+                    <td><a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                    <td><a href="{% url 'deletar_cliente' cliente.id %}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -56,8 +60,8 @@
 
     
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Cdastro -->
+    <div class="modal fade" id="modalCadastro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -71,6 +75,39 @@
                 <br>
                 <input type="number" name="cnpj" id="cnpj" class='form-control' placeholder='CNPJ'>
                 <br>
+                <label for="" style="margin-right: 10px;">Status:</label>
+                <select name="status" id="">
+                    <option value="Mensalidade">Mensalidade</option>
+                    <option value="Anuidade">Anuidade</option>
+                    <option value="Sem Contrato">Sem Contrato</option>
+                </select>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fachar</button>
+                <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="modal fade" id="modalEdicao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="." method="post">
+                {% csrf_token %}
+                <input type="text" name='nome' class='form-control' placeholder='Nome...'>
+                <br>
+                <input type="number" name="cnpj" id="cnpj" class='form-control' placeholder='CNPJ'>
+                <br>
+                <label for="" style="margin-right: 10px;">Status:</label>
                 <select name="status" id="">
                     <option value="Mensalidade">Mensalidade</option>
                     <option value="Anuidade">Anuidade</option>

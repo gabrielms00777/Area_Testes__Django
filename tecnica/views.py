@@ -39,6 +39,9 @@ def pesquisa_cliente(request):
         return render(request, 'pesquisa_cliente.html', {'status': status})
     else:
         cliente = request.POST.get('cliente')
+        cliente = cliente.replace('.', '')
+        cliente = cliente.replace('/', '')
+        cliente = cliente.replace('-', '')  
 
         if cliente.isdigit():
             existe = Clientes.objects.filter(cnpj=cliente)
@@ -57,9 +60,13 @@ def pesquisa_cliente(request):
             else:
                 return redirect('/painel/pesquisa_cliente/?status=2')
 
+def deletar_cliente(request, id):
+    return render()           
 
-            
-
+def editar_cliente(request, id):
+    if request.method == 'GET':
+        cliente = Clientes.objects.get(id=id)
+        return render(request, 'editar_cliente.html')
 
 
 
