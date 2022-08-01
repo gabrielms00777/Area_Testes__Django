@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes{% endblock title %}
+
+{% block conteudo %}
+
+    {% if status == '1' %}
+    <div class="alert alert-succes">
+        Empresa cadastrada com sucesso
+    </div>
+    <br>
+    {% endif %}
+
+    {% if status == '2' %}
+    <div class="alert alert-danger">
+        CNPJ já cadastrado
+    </div>
+    <br>
+    {% endif %}
+
+    {% if status == '3' %}
+    <div class="alert alert-danger">
+        Preencha todos os campos
+    </div>
+    <br>
+    {% endif %}
+
+    <div class="container mt-5">
+        <h2>Clientes Cadastrados</h2>
+        <hr>
+        <button type="button" class="btn btn-primary rigth" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Cadastrar Cliente
+        </button>
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Empresa</th>
+                  <th scope="col">CNPJ</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <th scope="row">{{cliente.id}}</th>
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.cnpj}}</td>
+                    <td>{{cliente.status}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+    </div>
+
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="." method="post">
+                {% csrf_token %}
+                <input type="text" name='nome' class='form-control' placeholder='Nome...'>
+                <br>
+                <input type="number" name="cnpj" id="cnpj" class='form-control' placeholder='CNPJ'>
+                <br>
+                <select name="status" id="">
+                    <option value="Mensalidade">Mensalidade</option>
+                    <option value="Anuidade">Anuidade</option>
+                    <option value="Sem Contrato">Sem Contrato</option>
+                </select>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fachar</button>
+                <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    
+
+
+{% endblock conteudo %}
